@@ -1,0 +1,20 @@
+Download both the CSV File and the Jupyter Notebook File before running.
+
+The goal of this project was to figure out what features from the dataset can help predict the price of the car. Because linear regression is a supervised algorithm, our training/test data contained the price as a feature. 
+
+My approach to this model is as follows:
+
+1: Data Exploration and Understanding
+I first understood the dataset by looking at feature frequencies and plots to observe trends. Then explore this data by creating a new dataframe consisting of only numerical features. From this data frame, I made a heatmap of the correlation matrix of all the features in the data frame. Very highly correlated features are subject to further testing to determine collinearity...
+
+2: Cleaning the Data
+Before creating the test/training data splits, I needed to make the 'CarName' feature usable in my model. To do this, I cleaned the data by stripping the 'CarName' to the 'Car_Company' by dropping all terms in each data point besides the first word, which contained the company name. I ran a frequency check (value_counts) on the feature to determine if there were any errors in converting from 'CarName' to 'Car_Company'. I then accounted for any spelling mistakes by renaming and replacing them.
+
+3: Data Preparation
+At this point, I still had several categorical features with some having numerical values through Strings (ie. 'One', 'Two', 'Three') while most were just normal. I started by creating a lambda function to translate these words into numbers. For the normal categorical variables, I created dummy variables while dropping the first to prevent collinearity. 
+
+4. Model Building
+Create my test and training data with 70/30 splits. Then accordingly scaled my data to standardize all features. Afterwards, I created a Linear Regression Model using the price in the training data as y_data and the remaining data as x_data. Then since 60 features is a lot for a model I used RFE from sklearn to recursively eliminate features until I reached 15. Then I fit these 15 features into an OLS regression. From this regression, I can calculate the p-values and VIF values. I then cut any features that exceed a VIF value of 10 and any p-value greater than 0.05. 
+
+5. Linear Regression
+After building the model, I run the r2 score and achieve an accuracy of ~90%. 
