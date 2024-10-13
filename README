@@ -1,20 +1,40 @@
-Download both the CSV File and the Jupyter Notebook File before running.
+Car Price Analyzer
+Project Overview
+This project aims to predict car prices using various features from a car dataset. Using a supervised learning approach, specifically linear regression, I trained the model on data that included car prices. This model explores which features most significantly affect car prices, with the final goal of achieving high predictive accuracy.
 
-The goal of this project was to figure out what features from the dataset can help predict the price of the car. Because linear regression is a supervised algorithm, our training/test data contained the price as a feature. 
+Prerequisites
+Before running the notebook, please download the following:
 
-My approach to this model is as follows:
+CarPrice_Assignment.csv – The dataset file.
+CarPriceAnalyzer.ipynb – The Jupyter notebook file.
+Ensure both files are in the same directory before launching the notebook.
 
-1: Data Exploration and Understanding
-I first understood the dataset by looking at feature frequencies and plots to observe trends. Then explore this data by creating a new dataframe consisting of only numerical features. From this data frame, I made a heatmap of the correlation matrix of all the features in the data frame. Very highly correlated features are subject to further testing to determine collinearity...
-
-2: Cleaning the Data
-Before creating the test/training data splits, I needed to make the 'CarName' feature usable in my model. To do this, I cleaned the data by stripping the 'CarName' to the 'Car_Company' by dropping all terms in each data point besides the first word, which contained the company name. I ran a frequency check (value_counts) on the feature to determine if there were any errors in converting from 'CarName' to 'Car_Company'. I then accounted for any spelling mistakes by renaming and replacing them.
-
-3: Data Preparation
-At this point, I still had several categorical features with some having numerical values through Strings (ie. 'One', 'Two', 'Three') while most were just normal. I started by creating a lambda function to translate these words into numbers. For the normal categorical variables, I created dummy variables while dropping the first to prevent collinearity. 
-
+Thought Process and Approach
+1. Data Exploration and Understanding
+I began by examining the dataset to understand feature distributions and identify potential trends.
+I focused on numerical features to generate a correlation matrix and visualize it with a heatmap. Features showing high correlation were analyzed further for collinearity.
+2. Cleaning the Data
+For the 'CarName' feature, I extracted the car company name by stripping all terms beyond the first word. This resulted in a new feature: Car_Company.
+A frequency check (value_counts) was conducted to identify any discrepancies in company names. Detected spelling errors were corrected to ensure data consistency.
+3. Data Preparation
+Several categorical features were still present, including numerical representations as strings (e.g., "One," "Two," "Three").
+A lambda function translated these words into numbers. Dummy variables were created for other categorical features, and the first dummy variable was dropped to prevent collinearity.
 4. Model Building
-Create my test and training data with 70/30 splits. Then accordingly scaled my data to standardize all features. Afterwards, I created a Linear Regression Model using the price in the training data as y_data and the remaining data as x_data. Then since 60 features is a lot for a model I used RFE from sklearn to recursively eliminate features until I reached 15. Then I fit these 15 features into an OLS regression. From this regression, I can calculate the p-values and VIF values. I then cut any features that exceed a VIF value of 10 and any p-value greater than 0.05. 
-
+Data was split into training and testing sets with a 70/30 ratio. Standardization was applied to ensure consistent feature scaling.
+An initial linear regression model was built with all features. Using Recursive Feature Elimination (RFE), I reduced the feature count to 15.
+An Ordinary Least Squares (OLS) regression was performed on these 15 features. Features with Variance Inflation Factor (VIF) > 10 or p-values > 0.05 were removed to enhance model efficiency.
 5. Linear Regression
-After building the model, I run the r2 score and achieve an accuracy of ~90%. 
+The final model achieved an R-squared score of ~90%, indicating strong predictive power.
+Running the Notebook
+To run the notebook:
+
+Open CarPriceAnalyzer.ipynb in Jupyter Notebook or any compatible platform.
+Execute each cell in sequence to observe the data processing, cleaning, model building, and evaluation stages.
+Examine the output for model metrics and insights about significant features impacting car prices.
+Libraries Used
+numpy
+pandas
+matplotlib
+seaborn
+statsmodels
+sklearn
